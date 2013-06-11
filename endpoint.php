@@ -23,7 +23,7 @@ if ($raw_config === FALSE) {
   exit(1);
 }
 
-$config = json_decode($raw_config);
+$config = json_decode($raw_config, true);
 if ($config === FALSE) {
   error_log("$app: config file is not valid json");
   kcl_header();
