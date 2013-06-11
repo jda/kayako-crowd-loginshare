@@ -1,5 +1,10 @@
 {
   "crowd_appname": "kayako-loginshare",
   "crowd_apppasswd": "Random-Password-Here",
-  "crowd_baseurl": "https://mycrowd.example.com/crowd/"
+  "crowd_baseurl": "https://mycrowd.example.com/crowd/",
+  "kayako_interfaces": [
+    "staff",
+    "winapp",
+    "mobile"
+  ]
 }
