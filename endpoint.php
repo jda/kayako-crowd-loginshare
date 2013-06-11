@@ -9,7 +9,7 @@ if (!$_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // kayako sends specific parameters so if they don't exist, bail
-$loginshare = loginshare_parse_request();
+$loginshare = loginshare_parse_request($_POST);
 if ($loginshare === FALSE) {
   exit(1);
 }
@@ -17,26 +17,23 @@ if ($loginshare === FALSE) {
 // load, parse, and validate config
 $raw_config = file_get_contents('config.json');
 if ($raw_config === FALSE) {
-  error_log("$app: config file could not be opened: config.json");
-  kcl_header();
-  print loginshare_error("$app config file not found");
-  exit(1);
+  kcl_error("config file could not be opened: config.json");
 }
 
 $config = json_decode($raw_config, true);
 if ($config === FALSE) {
-  error_log("$app: config file is not valid json");
-  kcl_header();
-  print loginshare_error("$app config file is not parsable");
-  exit(1);
+  kcl_error("config file is not parsable");
 }
 
 if (kcl_valid_config($config) === FALSE) {
-  error_log("$app: config file is not valid");
-  kcl_header();
-  print loginshare_error("$app config file is not valid");
-  exit(1);
+  kcl_error("config file is not valid");
 }
 
+// check if request is for a interface that we allow
+if (!loginshare_interface_allowed($loginshare['interface'], $config['kayako_interfaces'])) {
+  kcl_error("interface not allowed");
+}
+
+kcl_error("Not finished yet");
 
 ?>

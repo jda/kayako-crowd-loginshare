@@ -1,31 +1,34 @@
 <?php
+require_once('cdata.php');
 // functions to support Kayako LoginShare
 
-// Get loginshare data from HTTP POST or return false if required vars not present
-function loginshare_parse_request() {
+
+// See if array has all params for a valid loginshare request
+// E.g. pass $_POST to validate it
+function loginshare_parse_request($p) {
   $errflag = 0;
   $data = array();
 
-  if (isset($_POST['username'])) {
-    $data['username'] = $_POST['username'];
+  if (isset($p['username'])) {
+    $data['username'] = $p['username'];
   } else {
     $errflag++;
   }
 
-  if (isset($_POST['password'])) {
-    $data['password'] = $_POST['password'];
+  if (isset($p['password'])) {
+    $data['password'] = $p['password'];
   } else {
     $errflag++;
   }
 
-  if (isset($_POST['ipaddress'])) {
-    $data['ipaddress'] = $_POST['ipaddress'];
+  if (isset($p['ipaddress'])) {
+    $data['ipaddress'] = $p['ipaddress'];
   } else {
     $errflag++;
   }
 
-  if (isset($_POST['interface'])) {
-    $data['interface'] = $_POST['interface'];
+  if (isset($p['interface'])) {
+    $data['interface'] = $p['interface'];
   } else {
     $errflag++;
   }
@@ -36,9 +39,22 @@ function loginshare_parse_request() {
   return $data;
 }
 
+// check if interface used is in array of allowed interfaces
+function loginshare_interface_allowed($interface, $allowed) {
+  $is_allowed = FALSE;
+  foreach($allowed as $val) {
+    if ($val == $interface) {
+      $is_allowed = TRUE;
+      break;
+    }
+  }
+
+  return $is_allowed;
+}
+
 // Generate loginshare common XML
 function loginshare_xml() {
-  $x = new SimpleXMLElement('<?xml version="1.0 encoding="UTF-8"?><loginshare/>');
+  $x = new SimpleXMLExtended('<?xml version="1.0" encoding="UTF-8"?><loginshare/>');
   return $x;
 }
 
@@ -46,7 +62,7 @@ function loginshare_xml() {
 function loginshare_error($message) {
   $xml = loginshare_xml();
   $xml->addChild('result', 0);
-  $xml->addChild('message', $message);
+  $xml->addChildCData('message', $message);
   return $xml->asXML();
 }
 

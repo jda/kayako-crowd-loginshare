@@ -1,7 +1,4 @@
 <?php
-// common vars
-$app = "kayako-crowd-loginshare";
-
 // common functions
 
 // header to be sent before all requests
@@ -38,6 +35,15 @@ function kcl_valid_config($c) {
   }
   
   return TRUE;
+}
+
+// standard error handler
+function kcl_error($message) {
+  $msg = "kayako-crowd-loginshare: $message";
+  error_log($msg);
+  kcl_header();
+  print loginshare_error($msg);
+  exit(1);
 }
 
 ?>
