@@ -1,6 +1,7 @@
 <?php
 require_once('common.php');
 require_once('loginshare.php');
+require_once('crowd.php');
 
 // only do work if we get a request that appears valid
 // kayako sends POSTs so if it isn't POST, bail
@@ -34,6 +35,14 @@ if (!loginshare_interface_allowed($loginshare['interface'], $config['kayako_inte
   kcl_error("interface not allowed");
 }
 
-kcl_error("Not finished yet");
+// hit up crowd
+
+$c = new Crowd($config['crowd_baseurl'], $config['crowd_appname'], $config['crowd_apppasswd']);
+$a = $c->authenticate($loginshare['username'], $loginshare['password']);
+if (isset($a['reason'])) {
+  kcl_error($a['message']);
+}
+
+print loginshare_ok($a['first-name'], $a['last-name'], $a['email']);
 
 ?>

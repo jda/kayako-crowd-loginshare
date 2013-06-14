@@ -66,4 +66,18 @@ function loginshare_error($message) {
   return $xml->asXML();
 }
 
+function loginshare_ok($first, $last, $email, $team='', $title='', $mobile='', $signature='') {
+  $xml = loginshare_xml();
+  $xml->addChild('result', 1);
+  $staff = $xml->addChild('staff');
+  $staff->addChildCData('firstname', $first);
+  $staff->addChildCData('lastname', $last);
+  $staff->addChildCData('email', $email);
+  $staff->addChildCData('team', $team);
+  $staff->addChildCData('designation', $title);
+  $staff->addChildCData('mobilenumber', $mobile);
+  $staff->addChildCData('signature', $signature);
+  return $xml->asXML();
+}
+
 ?>
