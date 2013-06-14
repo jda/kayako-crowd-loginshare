@@ -6,5 +6,6 @@
     "staff",
     "winapp",
     "mobile"
-  ]
+  ],
+  "force_team": "Staff"
 }

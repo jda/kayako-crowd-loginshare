@@ -43,6 +43,9 @@ if (isset($a['reason'])) {
   kcl_error($a['message']);
 }
 
-print loginshare_ok($a['first-name'], $a['last-name'], $a['email']);
-
+if (isset($config['force_team'])) {
+  print loginshare_ok($a['first-name'], $a['last-name'], $a['email'], $config['force_team']);
+} else {
+  print loginshare_ok($a['first-name'], $a['last-name'], $a['email']);
+}
 ?>
