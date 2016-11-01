@@ -1,5 +1,6 @@
 kayako-crowd-loginshare (KCLS)
 =======================
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 Provides a [Kayako LoginShare API](http://wiki.kayako.com/display/DEV/LoginShare+For+Staff) endpoint to 
 authenticate staff users against [Atlassian Crowd](http://www.atlassian.com/software/crowd/overview) 
